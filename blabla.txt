@@ -1,0 +1,1049 @@
+USE [ExaminationSytem]
+GO
+/****** Object:  Table [dbo].[Answer]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Answer](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[StudentID] [int] NOT NULL,
+	[ExamID] [int] NOT NULL,
+	[QuestionID] [int] NOT NULL,
+	[ChoiceID] [int] NULL,
+	[AnswerText] [nvarchar](255) NULL,
+	[IsCorrect] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Choice]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Choice](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[QuestionID] [int] NOT NULL,
+	[Text] [nvarchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Course]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Course](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
+	[Duration] [int] NOT NULL,
+	[DepartmentID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Department]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Department](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Exam]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Exam](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
+	[Date] [date] NOT NULL,
+	[Duration] [int] NOT NULL,
+	[CourseID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Exam_Question]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Exam_Question](
+	[ExamID] [int] NOT NULL,
+	[QuestionID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ExamID] ASC,
+	[QuestionID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Instructor]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Instructor](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](60) NOT NULL,
+	[age] [int] NULL,
+	[dep_id] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Instructor_course]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Instructor_course](
+	[instructor_id] [int] NOT NULL,
+	[course_id] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[instructor_id] ASC,
+	[course_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Question]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Question](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Text] [nvarchar](255) NOT NULL,
+	[Answer] [nvarchar](255) NOT NULL,
+	[Type] [nvarchar](50) NOT NULL,
+	[Mark] [int] NOT NULL,
+	[CourseID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Student]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Student](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
+	[Year] [int] NOT NULL,
+	[DepartmentID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Student_Course]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Student_Course](
+	[StudentID] [int] NOT NULL,
+	[CourseID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[StudentID] ASC,
+	[CourseID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Student_Exam]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Student_Exam](
+	[StudentID] [int] NOT NULL,
+	[ExamID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[StudentID] ASC,
+	[ExamID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Topic]    Script Date: 3/2/2025 5:00:36 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Topic](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](60) NOT NULL,
+	[course_id] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Choice] ON 
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (1, 1, N'O(1)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (2, 1, N'O(n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (3, 1, N'O(log n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (4, 1, N'O(n^2)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (5, 2, N'Stack')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (6, 2, N'Queue')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (7, 2, N'Linked List')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (8, 2, N'Tree')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (9, 3, N'O(n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (10, 3, N'O(log n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (11, 3, N'O(1)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (12, 3, N'O(n^2)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (13, 4, N'Heap')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (14, 4, N'Stack')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (15, 4, N'Queue')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (16, 4, N'Linked List')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (17, 5, N'O(1)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (18, 5, N'O(n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (19, 5, N'O(log n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (20, 5, N'O(n^2)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (21, 6, N'O(n^2)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (22, 6, N'O(n log n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (23, 6, N'O(n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (24, 6, N'O(1)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (25, 7, N'Merge Sort')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (26, 7, N'Bubble Sort')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (27, 7, N'Insertion Sort')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (28, 7, N'Selection Sort')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (29, 8, N'O(log n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (30, 8, N'O(n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (31, 8, N'O(n^2)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (32, 8, N'O(1)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (33, 9, N'Dijkstra')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (34, 9, N'BFS')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (35, 9, N'DFS')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (36, 9, N'Kruskal')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (37, 10, N'O(n log n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (38, 10, N'O(n^2)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (39, 10, N'O(n)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (40, 10, N'O(1)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (41, 11, N'A unique identifier for a record')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (42, 11, N'A foreign key')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (43, 11, N'A composite key')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (44, 11, N'A candidate key')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (45, 12, N'DROP TABLE')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (46, 12, N'DELETE TABLE')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (47, 12, N'REMOVE TABLE')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (48, 12, N'ERASE TABLE')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (49, 13, N'To speed up data retrieval')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (50, 13, N'To store data')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (51, 13, N'To delete data')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (52, 13, N'To encrypt data')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (53, 14, N'3NF')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (54, 14, N'1NF')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (55, 14, N'2NF')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (56, 14, N'BCNF')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (57, 15, N'INNER JOIN')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (58, 15, N'LEFT JOIN')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (59, 15, N'RIGHT JOIN')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (60, 15, N'FULL JOIN')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (61, 16, N'Manage hardware and software resources')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (62, 16, N'Run applications')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (63, 16, N'Provide internet access')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (64, 16, N'Manage databases')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (65, 17, N'Shortest Job First (SJF)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (66, 17, N'First Come First Serve (FCFS)')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (67, 17, N'Round Robin')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (68, 17, N'Priority Scheduling')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (69, 18, N'To extend the apparent size of RAM')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (70, 18, N'To increase CPU speed')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (71, 18, N'To manage disk space')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (72, 18, N'To improve network performance')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (73, 19, N'Resource ordering')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (74, 19, N'Deadlock detection')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (75, 19, N'Process termination')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (76, 19, N'Timeout mechanism')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (77, 20, N'To manage files and directories')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (78, 20, N'To manage CPU scheduling')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (79, 20, N'To manage memory allocation')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (80, 20, N'To manage network connections')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (81, 21, N'To standardize network communication')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (82, 21, N'To manage hardware resources')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (83, 21, N'To provide internet access')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (84, 21, N'To encrypt data')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (85, 22, N'Network Layer')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (86, 22, N'Transport Layer')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (87, 22, N'Data Link Layer')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (88, 22, N'Application Layer')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (89, 23, N'To forward data between networks')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (90, 23, N'To connect devices within a network')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (91, 23, N'To provide wireless access')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (92, 23, N'To manage IP addresses')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (93, 24, N'HTTPS')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (94, 24, N'HTTP')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (95, 24, N'FTP')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (96, 24, N'SMTP')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (97, 25, N'80')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (98, 25, N'443')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (99, 25, N'21')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (100, 25, N'25')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (101, 26, N'HyperText Markup Language')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (102, 26, N'Hyperlinks and Text Management Language')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (103, 26, N'Home Tool Markup Language')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (104, 26, N'HyperText Machine Language')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (105, 27, N'CSS')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (106, 27, N'HTML')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (107, 27, N'JavaScript')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (108, 27, N'PHP')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (109, 28, N'To add interactivity to web pages')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (110, 28, N'To style web pages')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (111, 28, N'To manage databases')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (112, 28, N'To serve web pages')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (113, 29, N'React')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (114, 29, N'Node.js')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (115, 29, N'Django')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (116, 29, N'Flask')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (117, 30, N'To serve web pages to clients')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (118, 30, N'To style web pages')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (119, 30, N'To manage databases')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (120, 30, N'To add interactivity to web pages')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (121, 31, N'Scalability')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (122, 31, N'Cost reduction')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (123, 31, N'Improved security')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (124, 31, N'Faster internet')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (125, 32, N'IaaS')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (126, 32, N'PaaS')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (127, 32, N'SaaS')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (128, 32, N'FaaS')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (129, 33, N'To create virtual instances of hardware')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (130, 33, N'To improve network speed')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (131, 33, N'To manage databases')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (132, 33, N'To provide internet access')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (133, 34, N'Public Cloud')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (134, 34, N'Private Cloud')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (135, 34, N'Hybrid Cloud')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (136, 34, N'Community Cloud')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (137, 35, N'To distribute traffic across servers')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (138, 35, N'To store data')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (139, 35, N'To manage databases')
+GO
+INSERT [dbo].[Choice] ([ID], [QuestionID], [Text]) VALUES (140, 35, N'To provide internet access')
+GO
+SET IDENTITY_INSERT [dbo].[Choice] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Course] ON 
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (1, N'Data Structures', 60, 1)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (2, N'Algorithms', 70, 1)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (3, N'Database Systems', 75, 1)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (4, N'Operating Systems', 80, 1)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (5, N'Networking Basics', 60, 2)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (6, N'Web Development', 75, 2)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (7, N'Cloud Computing', 90, 2)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (8, N'Cyber Security Fundamentals', 85, 2)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (9, N'Software Development', 80, 3)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (10, N'Object-Oriented Programming', 85, 3)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (11, N'Agile Methodologies', 75, 3)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (12, N'Software Testing', 70, 3)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (13, N'Ethical Hacking', 90, 4)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (14, N'Cryptography', 85, 4)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (15, N'Network Security', 80, 4)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (16, N'Cyber Threat Intelligence', 70, 4)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (17, N'Machine Learning', 100, 5)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (18, N'Deep Learning', 95, 5)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (19, N'Natural Language Processing', 90, 5)
+GO
+INSERT [dbo].[Course] ([ID], [Name], [Duration], [DepartmentID]) VALUES (20, N'Computer Vision', 85, 5)
+GO
+SET IDENTITY_INSERT [dbo].[Course] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Department] ON 
+GO
+INSERT [dbo].[Department] ([ID], [Name]) VALUES (5, N'Artificial Intelligence')
+GO
+INSERT [dbo].[Department] ([ID], [Name]) VALUES (1, N'Computer Science')
+GO
+INSERT [dbo].[Department] ([ID], [Name]) VALUES (4, N'Cyber Security')
+GO
+INSERT [dbo].[Department] ([ID], [Name]) VALUES (2, N'Information Technology')
+GO
+INSERT [dbo].[Department] ([ID], [Name]) VALUES (3, N'Software Engineering')
+GO
+SET IDENTITY_INSERT [dbo].[Department] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Question] ON 
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (1, N'What is the time complexity of inserting an element at the end of a dynamic array?', N'O(1)', N'multichoice', 5, 1)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (2, N'Which data structure uses the LIFO principle?', N'Stack', N'multichoice', 5, 1)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (3, N'What is the worst-case time complexity of searching in a binary search tree?', N'O(n)', N'multichoice', 5, 1)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (4, N'Which data structure is used for implementing a priority queue?', N'Heap', N'multichoice', 5, 1)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (5, N'What is the time complexity of deleting an element from a linked list?', N'O(1)', N'multichoice', 5, 1)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (6, N'A stack follows the FIFO principle.', N'false', N'true/false', 5, 1)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (7, N'A binary search tree is always balanced.', N'false', N'true/false', 5, 1)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (8, N'A linked list uses contiguous memory allocation.', N'false', N'true/false', 5, 1)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (9, N'A queue follows the LIFO principle.', N'false', N'true/false', 5, 1)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (10, N'A hash table has an average time complexity of O(1) for lookups.', N'true', N'true/false', 5, 1)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (11, N'What is the time complexity of bubble sort in the worst case?', N'O(n^2)', N'multichoice', 5, 2)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (12, N'Which algorithm uses the divide and conquer strategy?', N'Merge Sort', N'multichoice', 5, 2)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (13, N'What is the time complexity of binary search?', N'O(log n)', N'multichoice', 5, 2)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (14, N'Which algorithm is used to find the shortest path in a graph?', N'Dijkstra', N'multichoice', 5, 2)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (15, N'What is the time complexity of quicksort in the average case?', N'O(n log n)', N'multichoice', 5, 2)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (16, N'Bubble sort has a time complexity of O(n log n).', N'false', N'true/false', 5, 2)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (17, N'Merge sort is a stable sorting algorithm.', N'true', N'true/false', 5, 2)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (18, N'Quick sort always has a time complexity of O(n log n).', N'false', N'true/false', 5, 2)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (19, N'Dijkstra’s algorithm works for graphs with negative weights.', N'false', N'true/false', 5, 2)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (20, N'Binary search can be applied to unsorted arrays.', N'false', N'true/false', 5, 2)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (21, N'What is the primary key in a database?', N'A unique identifier for a record', N'multichoice', 5, 3)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (22, N'Which SQL command is used to delete a table?', N'DROP TABLE', N'multichoice', 5, 3)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (23, N'What is the purpose of an index in a database?', N'To speed up data retrieval', N'multichoice', 5, 3)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (24, N'Which normal form eliminates transitive dependency?', N'3NF', N'multichoice', 5, 3)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (25, N'What is the default join in SQL?', N'INNER JOIN', N'multichoice', 5, 3)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (26, N'A foreign key can have duplicate values.', N'true', N'true/false', 5, 3)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (27, N'A primary key can be null.', N'false', N'true/false', 5, 3)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (28, N'A view in SQL is a physical table.', N'false', N'true/false', 5, 3)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (29, N'The GROUP BY clause is used to filter rows.', N'false', N'true/false', 5, 3)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (30, N'A transaction in SQL is atomic.', N'true', N'true/false', 5, 3)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (31, N'What is the main function of an operating system?', N'Manage hardware and software resources', N'multichoice', 5, 4)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (32, N'Which scheduling algorithm provides the shortest average waiting time?', N'Shortest Job First (SJF)', N'multichoice', 5, 4)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (33, N'What is the purpose of virtual memory?', N'To extend the apparent size of RAM', N'multichoice', 5, 4)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (34, N'Which of the following is a deadlock prevention technique?', N'Resource ordering', N'multichoice', 5, 4)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (35, N'What is the role of the file system in an OS?', N'To manage files and directories', N'multichoice', 5, 4)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (36, N'A process in the "ready" state is waiting for CPU time.', N'true', N'true/false', 5, 4)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (37, N'Virtual memory is faster than physical memory.', N'false', N'true/false', 5, 4)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (38, N'Deadlock occurs when two processes are waiting for each other to release resources.', N'true', N'true/false', 5, 4)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (39, N'The kernel is the core component of an operating system.', N'true', N'true/false', 5, 4)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (40, N'Round Robin scheduling is non-preemptive.', N'false', N'true/false', 5, 4)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (41, N'What is the primary purpose of the OSI model?', N'To standardize network communication', N'multichoice', 5, 5)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (42, N'Which layer of the OSI model is responsible for routing?', N'Network Layer', N'multichoice', 5, 5)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (43, N'What is the function of a router?', N'To forward data between networks', N'multichoice', 5, 5)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (44, N'Which protocol is used for secure communication over the internet?', N'HTTPS', N'multichoice', 5, 5)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (45, N'What is the default port for HTTP?', N'80', N'multichoice', 5, 5)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (46, N'The OSI model has 7 layers.', N'true', N'true/false', 5, 5)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (47, N'TCP is a connectionless protocol.', N'false', N'true/false', 5, 5)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (48, N'IP addresses are used to identify devices on a network.', N'true', N'true/false', 5, 5)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (49, N'DNS translates domain names to IP addresses.', N'true', N'true/false', 5, 5)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (50, N'UDP guarantees packet delivery.', N'false', N'true/false', 5, 5)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (51, N'What does HTML stand for?', N'HyperText Markup Language', N'multichoice', 5, 6)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (52, N'Which language is used for styling web pages?', N'CSS', N'multichoice', 5, 6)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (53, N'What is the purpose of JavaScript in web development?', N'To add interactivity to web pages', N'multichoice', 5, 6)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (54, N'Which of the following is a front-end framework?', N'React', N'multichoice', 5, 6)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (55, N'What is the role of a web server?', N'To serve web pages to clients', N'multichoice', 5, 6)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (56, N'HTML is used to define the structure of a web page.', N'true', N'true/false', 5, 6)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (57, N'CSS is used to add interactivity to web pages.', N'false', N'true/false', 5, 6)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (58, N'JavaScript can be used for both front-end and back-end development.', N'true', N'true/false', 5, 6)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (59, N'React is a back-end framework.', N'false', N'true/false', 5, 6)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (60, N'A web server processes client requests and sends responses.', N'true', N'true/false', 5, 6)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (61, N'What is the main advantage of cloud computing?', N'Scalability', N'multichoice', 5, 7)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (62, N'Which service model provides hardware infrastructure?', N'IaaS', N'multichoice', 5, 7)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (63, N'What is the purpose of virtualization in cloud computing?', N'To create virtual instances of hardware', N'multichoice', 5, 7)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (64, N'Which cloud deployment model is used by multiple organizations?', N'Public Cloud', N'multichoice', 5, 7)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (65, N'What is the role of a load balancer in cloud computing?', N'To distribute traffic across servers', N'multichoice', 5, 7)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (66, N'Cloud computing eliminates the need for physical servers.', N'false', N'true/false', 5, 7)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (67, N'IaaS provides virtual machines to users.', N'true', N'true/false', 5, 7)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (68, N'Public clouds are owned by a single organization.', N'false', N'true/false', 5, 7)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (69, N'Load balancing improves the performance of cloud applications.', N'true', N'true/false', 5, 7)
+GO
+INSERT [dbo].[Question] ([ID], [Text], [Answer], [Type], [Mark], [CourseID]) VALUES (70, N'SaaS provides access to software applications over the internet.', N'true', N'true/false', 5, 7)
+GO
+SET IDENTITY_INSERT [dbo].[Question] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Student] ON 
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (1, N'Ahmed Al-Jabali', 1, 1)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (2, N'Bassam Al-Dosari', 2, 1)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (3, N'Jamal Al-Saeedi', 3, 1)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (4, N'Duraid Al-Kilani', 4, 1)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (5, N'Eyad Al-Masri', 5, 1)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (6, N'Firas Al-Shami', 2, 1)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (7, N'Ghassan Al-Hashemi', 3, 1)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (8, N'Hani Al-Otaibi', 4, 1)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (9, N'Ehab Al-Maliki', 1, 2)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (10, N'Jawad Al-Najjar', 2, 2)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (11, N'Karim Al-Tayeb', 3, 2)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (12, N'Louay Al-Obaidi', 4, 2)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (13, N'Moataz Al-Saleh', 5, 2)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (14, N'Nader Al-Harithi', 2, 2)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (15, N'Omar Al-Zahrani', 3, 2)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (16, N'Bassem Al-Fahd', 4, 2)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (17, N'Qusai Al-Nasser', 1, 3)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (18, N'Riyad Al-Humaidi', 2, 3)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (19, N'Sami Al-Yassin', 3, 3)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (20, N'Tawfiq Al-Badr', 4, 3)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (21, N'Amjad Al-Sulami', 5, 3)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (22, N'Wael Al-Marzouqi', 2, 3)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (23, N'Yassin Al-Faris', 3, 3)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (24, N'Zakaria Al-Shammari', 4, 3)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (25, N'Yahya Al-Rashed', 1, 4)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (26, N'Zaid Al-Qahtani', 2, 4)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (27, N'Adam Al-Husseini', 3, 4)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (28, N'Bahir Al-Daham', 4, 4)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (29, N'Karima Al-Mani', 5, 4)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (30, N'Daniel Al-Ali', 2, 4)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (31, N'Iman Al-Zubair', 3, 4)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (32, N'Farid Al-Hassan', 4, 4)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (33, N'Jalal Al-Naimi', 1, 5)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (34, N'Hajar Al-Amri', 2, 5)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (35, N'Ismail Al-Tahawi', 3, 5)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (36, N'Jenan Al-Abbasi', 4, 5)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (37, N'Kamel Al-Safi', 5, 5)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (38, N'Lamia Al-Saadi', 2, 5)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (39, N'Majed Al-Derawi', 3, 5)
+GO
+INSERT [dbo].[Student] ([ID], [Name], [Year], [DepartmentID]) VALUES (40, N'Nawal Al-Qadri', 4, 5)
+GO
+SET IDENTITY_INSERT [dbo].[Student] OFF
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (1, 1)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (1, 2)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (2, 2)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (2, 3)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (3, 3)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (3, 4)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (4, 1)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (4, 4)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (5, 2)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (5, 3)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (6, 1)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (6, 3)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (7, 2)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (7, 4)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (8, 1)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (8, 3)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (9, 5)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (9, 6)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (10, 6)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (10, 7)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (11, 7)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (11, 8)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (12, 5)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (12, 8)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (13, 6)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (13, 7)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (14, 5)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (14, 7)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (15, 6)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (15, 8)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (16, 5)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (16, 7)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (17, 9)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (17, 10)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (18, 10)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (18, 11)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (19, 11)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (19, 12)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (20, 9)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (20, 12)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (21, 10)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (21, 11)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (22, 9)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (22, 11)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (23, 10)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (23, 12)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (24, 9)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (24, 11)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (25, 13)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (25, 14)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (26, 14)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (26, 15)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (27, 15)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (27, 16)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (28, 13)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (28, 16)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (29, 14)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (29, 15)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (30, 13)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (30, 15)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (31, 14)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (31, 16)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (32, 13)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (32, 15)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (33, 17)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (33, 18)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (34, 18)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (34, 19)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (35, 19)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (35, 20)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (36, 17)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (36, 20)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (37, 18)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (37, 19)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (38, 17)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (38, 19)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (39, 18)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (39, 20)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (40, 17)
+GO
+INSERT [dbo].[Student_Course] ([StudentID], [CourseID]) VALUES (40, 19)
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [UQ__Departme__737584F6EAA51E9E]    Script Date: 3/2/2025 5:00:37 PM ******/
+ALTER TABLE [dbo].[Department] ADD UNIQUE NONCLUSTERED 
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Answer] ADD  DEFAULT ((0)) FOR [IsCorrect]
+GO
+ALTER TABLE [dbo].[Answer]  WITH CHECK ADD FOREIGN KEY([ChoiceID])
+REFERENCES [dbo].[Choice] ([ID])
+GO
+ALTER TABLE [dbo].[Answer]  WITH CHECK ADD FOREIGN KEY([ExamID])
+REFERENCES [dbo].[Exam] ([ID])
+GO
+ALTER TABLE [dbo].[Answer]  WITH CHECK ADD FOREIGN KEY([QuestionID])
+REFERENCES [dbo].[Question] ([ID])
+GO
+ALTER TABLE [dbo].[Answer]  WITH CHECK ADD FOREIGN KEY([StudentID])
+REFERENCES [dbo].[Student] ([ID])
+GO
+ALTER TABLE [dbo].[Choice]  WITH CHECK ADD FOREIGN KEY([QuestionID])
+REFERENCES [dbo].[Question] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Course]  WITH CHECK ADD FOREIGN KEY([DepartmentID])
+REFERENCES [dbo].[Department] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Exam]  WITH CHECK ADD FOREIGN KEY([CourseID])
+REFERENCES [dbo].[Course] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Exam_Question]  WITH CHECK ADD FOREIGN KEY([ExamID])
+REFERENCES [dbo].[Exam] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Exam_Question]  WITH CHECK ADD FOREIGN KEY([QuestionID])
+REFERENCES [dbo].[Question] ([ID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Instructor]  WITH CHECK ADD FOREIGN KEY([dep_id])
+REFERENCES [dbo].[Department] ([ID])
+GO
+ALTER TABLE [dbo].[Instructor_course]  WITH CHECK ADD FOREIGN KEY([course_id])
+REFERENCES [dbo].[Course] ([ID])
+GO
+ALTER TABLE [dbo].[Instructor_course]  WITH CHECK ADD FOREIGN KEY([instructor_id])
+REFERENCES [dbo].[Instructor] ([id])
+GO
+ALTER TABLE [dbo].[Question]  WITH CHECK ADD  CONSTRAINT [FK_Question_Course] FOREIGN KEY([CourseID])
+REFERENCES [dbo].[Course] ([ID])
+GO
+ALTER TABLE [dbo].[Question] CHECK CONSTRAINT [FK_Question_Course]
+GO
+ALTER TABLE [dbo].[Student]  WITH CHECK ADD FOREIGN KEY([DepartmentID])
+REFERENCES [dbo].[Department] ([ID])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[Student_Course]  WITH CHECK ADD FOREIGN KEY([CourseID])
+REFERENCES [dbo].[Course] ([ID])
+GO
+ALTER TABLE [dbo].[Student_Course]  WITH CHECK ADD FOREIGN KEY([StudentID])
+REFERENCES [dbo].[Student] ([ID])
+GO
+ALTER TABLE [dbo].[Student_Exam]  WITH CHECK ADD FOREIGN KEY([ExamID])
+REFERENCES [dbo].[Exam] ([ID])
+GO
+ALTER TABLE [dbo].[Student_Exam]  WITH CHECK ADD FOREIGN KEY([StudentID])
+REFERENCES [dbo].[Student] ([ID])
+GO
+ALTER TABLE [dbo].[Topic]  WITH CHECK ADD FOREIGN KEY([course_id])
+REFERENCES [dbo].[Course] ([ID])
+GO
+ALTER TABLE [dbo].[Question]  WITH CHECK ADD CHECK  (([Type]='true/false' OR [Type]='multichoice'))
+GO
+-------------------------
+create table Instructor
+(
+id int primary key identity(1,1),
+name  nvarchar(60) not null ,
+age int  ,
+dep_id  int not null,
+FOREIGN KEY (dep_id) REFERENCES Department(ID)
+);
+
+
+create table Topic
+(
+id int primary key identity(1,1),
+name  nvarchar(60) not null ,
+course_id  int not null,
+FOREIGN KEY (course_id) REFERENCES Course(ID)
+);
+
+
+
+create table Instructor_course
+(
+instructor_id int not null ,
+course_id int not null ,
+
+primary key(instructor_id,course_id),
+foreign key (instructor_id) references Instructor(id),
+foreign key (course_id) references Course(ID)
+
+)
+i just  created these tables add data for them
+ 
