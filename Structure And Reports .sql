@@ -500,7 +500,7 @@ Exam_correction 3,20
 
 
 ---------------------------------------------------------------------------------
---•	Report that takes course ID and returns its topics.
+--Â•	Report that takes course ID and returns its topics.
 
 create proc get_course_topic @courseID int 
 as 
@@ -514,7 +514,7 @@ get_course_topic 1
 
 
 
--- •	Report that takes exam number and returns Questions in it.
+-- Â•	Report that takes exam number and returns Questions in it.
 create proc  get_exam_questions @examId int
 as
 	select Q.Text Question , Q.Answer ,Q.Mark from Exam_Question  EQ
@@ -525,7 +525,7 @@ as
 
 get_exam_questions 3 
 
--- •Report that takes the instructor ID and returns the name of the courses that he teaches and the number of students per course. 
+-- Â•Report that takes the instructor ID and returns the name of the courses that he teaches and the number of students per course. 
 
 
 alter proc get_instructor_courses_students @id int 
@@ -557,7 +557,7 @@ as
 
 get_exam_question_answers 3 , 1
 
--- •	Report that takes the student ID and returns the grades of the student in all courses.
+-- Â•	Report that takes the student ID and returns the grades of the student in all courses.
 create proc get_student_Courses @studentId int
 as 
 	select Course.Name  CourseName,  isnull(sum(Mark),0)  StudentMark  from Answer A 
@@ -575,7 +575,7 @@ as
 get_student_Courses  1 
 
 
--- •	Report that returns the students information according to Department No parameter.
+-- Â•	Report that returns the students information according to Department No parameter.
 
 create proc get_student_info_by_department @DepId int 
 as 
